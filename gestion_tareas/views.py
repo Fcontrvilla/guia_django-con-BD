@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tarea
 from .forms import TareaForm
 
@@ -20,3 +20,19 @@ def nueva_tarea(request):
     else:
         form = TareaForm()
         return render(request, 'nueva_tarea.html', {'form':form})
+
+
+def editar_tarea(request, pk):
+    tarea = get_object_or_404(Tarea, pk=pk)  #busca un objeto con pk y si no, resuelve error 404
+
+    if request.method == "POST":
+        form = TareaForm(request.POST, instance=tarea)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('lista_tareas')
+
+    else:
+        form = TareaForm(instance=tarea)
+        return render(request, 'editar_tarea.html', {'form':form}, {'tarea':tarea})
