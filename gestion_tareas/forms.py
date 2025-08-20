@@ -3,6 +3,6 @@ from django import forms
 
 class TareaForm(forms.ModelForm):
     
-    class meta:
+    class Meta:
         model = Tarea
         fields = ['titulo', 'descripcion']
