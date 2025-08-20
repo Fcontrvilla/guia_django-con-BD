@@ -35,4 +35,13 @@ def editar_tarea(request, pk):
 
     else:
         form = TareaForm(instance=tarea)
-        return render(request, 'editar_tarea.html', {'form':form}, {'tarea':tarea})
+        # Corrección: El contexto debe ser un solo diccionario.
+        return render(request, 'editar_tarea.html', {'form': form, 'tarea': tarea})
+
+
+def borrar_tarea(request, pk):
+    tarea = get_object_or_404(Tarea, pk=pk)
+    if request.method == 'POST':
+        tarea.delete()
+        return redirect('lista_tareas')
+    return render(request, 'borrar_tarea.html', {'tarea': tarea})

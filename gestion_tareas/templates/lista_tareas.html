@@ -7,13 +7,18 @@
 </head>
 <body>
     <h1>lista de tareas</h1>
-    {% for tarea in tareas %}
-        {{ tarea.titulo }}
-        {{ tarea.descripcion }}
+    <ul>
+        {% for tarea in tareas %}
+            <li>
+                <strong>{{ tarea.titulo }}</strong>: {{ tarea.descripcion }}
+                <a href="{% url 'editar_tarea' tarea.pk %}">Editar</a>
+                <a href="{% url 'borrar_tarea' tarea.pk %}">Borrar</a>
+            </li>
+        {% empty %}
+            <li>No hay tareas aún.</li>
+        {% endfor %}
+    </ul>
 
-
-
-    {% endfor %}
-
+    <a href="{% url 'nueva_tarea' %}">Crear Nueva Tarea</a>
 </body>
 </html>
